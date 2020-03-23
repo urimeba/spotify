@@ -1,14 +1,13 @@
 """
-Things that should be modified here:
+Things that SHOULD be modified here:
 *ALLOWED HOST
 *INSTALLED APPS
-*DATABASE SETTINGS (NAME, USER, PASSWORD, PORT, HOST)
-*TEMPLATES DIRS
-*STATIC DIRS
+*DATABASE SETTINGS (ENGINE, NAME, USER, PASSWORD, PORT, HOST)
+*TEMPLATES DIRECTORY
+*STATICs DIRECTORY
 """
 
 import os
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # IMPORTANT: keep the secret key used in production secret!
@@ -17,8 +16,7 @@ SECRET_KEY = 'fe$tu-z8w$)$(5cbll$$%llqele65y%vmh_4w2j^5@)*5ur-m_'
 # IMPORTANT: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWING ALL HOSTS FOR NOW
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,10 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # ADDING THE APPS THAT WE CREATED
-    'Apps.Reproduccion',
-    'Apps.User'
 ]
 
 MIDDLEWARE = [
@@ -48,8 +42,7 @@ ROOT_URLCONF = 'spotify.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # CHANGING THE PATH OF THE TEMPLATES
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,13 +59,6 @@ WSGI_APPLICATION = 'spotify.wsgi.application'
 
 DATABASES = {
     'default': {
-        # CHANGING THE DATABASE SETTINGS
-        'ENGINE': 'django.db.backends.mysql', 
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'NAME': 'spotify',
-        'USER': 'root',
-        'PASSWORD': '',
     }
 }
 
@@ -91,16 +77,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# I'VE CHANGED THE LANGUAGE AND REGION IN "LANGUAGE_CODE", SO THE SITE CAN BE IN ENGLISH
-# IF YOU WANT YOU CAN MAKE THIS CHANGE ALSO. IF YOU DECIDED NOT TO, IT'S OK
-LANGUAGE_CODE = 'es-mx'
+LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# CHANGING THE PATH FOR STATIC FILES (CSS, JS AND IMAGES)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "Static"),
-]
