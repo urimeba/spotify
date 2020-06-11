@@ -1,0 +1,380 @@
+{% extends 'navbar_artista.html' %}
+{% load static %}
+{% block content %}
+<script>
+    $(function(){
+        $("#fechaAlbum").datepicker({
+            maxDate: "+5Y",
+            dateFormat: "yy-mm-dd",
+            showAnim: "slide"
+        })
+    })
+
+    var f= function(){
+        let id = this.dataset.id;
+        let nombre = this.dataset.nombre;
+        
+        let modalConfirmacion = document.getElementById("btnEliminarCancion");
+        modalConfirmacion.setAttribute("data-id", id);
+
+        let nombreCancion = document.getElementById("nombre");
+        nombreCancion.textContent=nombre;
+    };
+    
+    var init = $(document).on("click", ".cancion", f);
+
+    window.onload=init;
+</script>
+
+<!-- Modal Exito-->
+<div class="modal fade" id="modalExito" 
+tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar canción</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Cancion agregada exitosamente
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Error -->
+<div class="modal fade" id="modalError" 
+tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">ERROR!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Ha ocurrido un error al intentar agregar esta cancion.
+            Recarge la pagina o intente nuevamente mas tarde
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% if canciones %}
+{% regroup canciones by album as lista_albums %}
+<!-- Modal Cancion -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Agregar una canción</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input id="nombreCancion" type="text" placeholder="Nombre de la cancion" 
+                class="form form-control">
+            </div>
+            <div class="form-group">
+                <input id="duracionCancion" type="number" placeholder="Duración de la cancion" 
+                min="0" step=".01" class="form form-control">
+            </div>
+
+            <div class="form-group">
+                <input id="autorCancion" type="text" placeholder="Autor(es)" class="form form-control">
+            </div>
+            <div class="form-group">
+                <input id="albumCancion" data-idalbum="{{lista_albums.0.grouper.id}}" type="text" 
+                placeholder="Album" class="form form-control" disabled value="{{lista_albums.0.grouper.nombre}}">
+            </div>
+            <div class="form-group">
+                <label for="archivo">Archivo</label>
+                <input id="archivoCancion" accept=".mp3" name="archivo" id="archivo" type="file" 
+                placeholder="Archivo" class="form form-control">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" onclick="agregarCancion()" class="btn btn-primary">Agregar canción</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalConfirmarCancion" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarCancionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalConfirmarCancionLabel">Eliminar canción</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Seguro que deseas eliminar esta canción?
+          <p class="font-weight-bold" id="nombre"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" onclick="eliminarCancion(this)" id="btnEliminarCancion">Eliminar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-dark text-white d-flex flex-column" style="min-height: 90vh;">
+    <div class="container-fluid bg-dark text-light">
+        {% for album in lista_albums %}
+        <!-- CONTENDOR DEL ALBUM COMPLETO -->
+        <fieldset class="container w-75 mt-3" id="idAlbum" data-idalbum="{{idAlbum}}"> 
+            <div class="container-fluid d-flex flex-row justify-content-between align-items-start">
+                <!-- CONTENEDOR DE LAS DOS COLUMNAS -->
+                <div class="row">
+                    <!-- CONTENEDOR DE LA IMAGEN -->
+                    <div class="col-4">
+                        <img class="w-100" src="{{MEDIA_URL}}{{album.grouper.foto}}" alt="">
+                    </div>
+                    <!-- CONTENEDOR DE LA INFORMACION -->
+                    <div id="inputsAlbum" class="col-8  w-75 d-flex flex-column justify-content-center align-items-center">
+                        <div class="row ">
+                            <div class="w-100  d-flex flex-column justify-content-center align-items-center">
+                                <!-- <p class="display-4 font-weight-bold">{{album.grouper.nombre}}</p> -->
+                                <input disabled="true" id="nombreAlbum" value="{{album.grouper.nombre}}" class="form-control bigFont form-control-lg block font-weight-bold" type="text">
+                            </div>
+                            
+                        </div>
+                        <!-- CONTENEDOR DE LA INFORMACION ESPECIFICA -->
+                        <div class="container-fluid" style="height: 10%;">
+                            <p>
+                                <!-- <span><input class="form-control form-control-sm" type="text"></span> -->
+                                <!-- <span class="bg-secondary">{{album.grouper.fecha}}</span> -->
+                                <input type="text" id="fechaAlbum"  class="form-control form-control-sm mt-2" disabled="true" value="{{album.grouper.fecha|date:"Y-m-d"}}">
+                                <!-- <span>•</span> -->
+                                <!-- <span class="bg-secondary">{{album.grouper.genero}}</span> -->
+                                <input type="text" id="generoAlbum" class="form-control form-control-sm mt-2" disabled="true" value="{{album.grouper.genero}}">
+                                <!-- <span>•</span> -->
+                                <span >{{album.list|length}} canciones</span>
+                                <span>•</span>
+                                <span>Duracion</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENEDOR DE LA TABLA DE CANCIONES -->
+            <div class="container-fluid">
+                <table class="table table-dark text-center" id="table">
+                    <thead>
+                    <tr>
+                        <th scope="col-1">#</th>
+                        <th scope="col-5">Nombre</th>
+                        <th scope="col-4">Autor(es)</th>
+                        <th scope="col-2">
+                            <img class="time-img" src="{% static 'img/time.png' %}" alt="" style="filter: brightness(0) invert(1);">
+                        </th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for cancion in album.list %}
+                            <tr id="cancion-{{cancion.id}}">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{cancion.nombre}}</td>
+                                <td>{{cancion.autor}}</td>
+                                <td>{{cancion.duracion}}</td>
+                                <td>
+                                    <button 
+                                    class="btn btn-sm btn-success"
+
+                                    data-id="cancion-{{cancion.id}}"
+                                    onclick="editarCancion(this)"
+                                    id="btn-editar-cancion-{{cancion.id}}"
+                                    >
+                                    Editar
+                                </button>
+                                </td>
+                                <td>
+                                    <button 
+                                        class="btn btn-sm btn-danger cancion" 
+                                        data-toggle="modal" 
+                                        data-target="#modalConfirmarCancion"
+                                        data-nombre="{{cancion.nombre}}"
+                                        data-id="cancion-{{cancion.id}}"
+
+                                        id="btn-eliminar-cancion-{{cancion.id}}"
+                                        
+                                        >
+                                        
+                                        Eliminar
+                                    </button>
+                                </td>
+                              </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="container mt-2 mb-5">
+                    <button data-toggle="modal" data-target="#modal" 
+                    class="btn btn-secondary btn-block">Agregar otra cancion</button>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-row justify-content-between">
+                <button id="btn-principal" class="btn btn-primary w-50 m-2" onclick="editarAlbum()">
+                    Editar album
+                </button>
+                
+                <button class="btn btn-danger w-50 m-2" onclick="eliminarAlbum()">
+                    Eliminar album
+                </button>
+            </div>
+
+            
+
+        </fieldset>
+        {% endfor %}
+        
+    </div>
+</div>
+
+{% elif album %}
+<!-- Modal Cancion -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Agregar una canción</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input id="nombreCancion" type="text" placeholder="Nombre de la cancion" 
+                class="form form-control">
+            </div>
+            <div class="form-group">
+                <input id="duracionCancion" type="number" placeholder="Duración de la cancion" 
+                min="0" step=".01" class="form form-control">
+            </div>
+
+            <div class="form-group">
+                <input id="autorCancion" type="text" placeholder="Autor(es)" class="form form-control">
+            </div>
+            <div class="form-group">
+                <input id="albumCancion" data-idalbum="{{album.id}}" type="text" 
+                placeholder="Album" class="form form-control" disabled value="{{album.nombre}}">
+            </div>
+            <div class="form-group">
+                <label for="archivo">Archivo</label>
+                <input id="archivoCancion" accept=".mp3" name="archivo" id="archivo" type="file" 
+                placeholder="Archivo" class="form form-control">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" onclick="agregarCancion()" class="btn btn-primary">Agregar canción</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalConfirmarCancion" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarCancionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalConfirmarCancionLabel">Eliminar canción</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Seguro que deseas eliminar esta canción?
+          <p class="font-weight-bold" id="nombre"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" onclick="eliminarCancion(this)" id="btnEliminarCancion">Eliminar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-dark text-white d-flex flex-column" style="min-height: 90vh;">
+    <div class="container-fluid bg-dark text-light">
+        <!-- CONTENDOR DEL ALBUM COMPLETO -->
+        <fieldset class="container w-75 mt-3" id="idAlbum" data-idalbum="{{idAlbum}}"> 
+            <div class="container-fluid d-flex flex-row justify-content-between align-items-start">
+                <!-- CONTENEDOR DE LAS DOS COLUMNAS -->
+                <div class="row">
+                    <!-- CONTENEDOR DE LA IMAGEN -->
+                    <div class="col-4">
+                        <img class="w-100" src="{{MEDIA_URL}}{{album.foto}}" alt="">
+                    </div>
+                    <!-- CONTENEDOR DE LA INFORMACION -->
+                    <div id="inputsAlbum" class="col-8  w-75 d-flex flex-column justify-content-center align-items-center">
+                        <div class="row ">
+                            <div class="w-100  d-flex flex-column justify-content-center align-items-center">
+                                <!-- <p class="display-4 font-weight-bold">{{album.nombre}}</p> -->
+                                <input disabled="true" id="nombreAlbum" value="{{album.nombre}}" class="form-control bigFont form-control-lg block font-weight-bold" type="text">
+                            </div>
+                            
+                        </div>
+                        <!-- CONTENEDOR DE LA INFORMACION ESPECIFICA -->
+                        <div class="container-fluid" style="height: 10%;">
+                            <p>
+                                <!-- <span><input class="form-control form-control-sm" type="text"></span> -->
+                                <!-- <span class="bg-secondary">{{album.fecha}}</span> -->
+                                <input type="text" id="fechaAlbum"  class="form-control form-control-sm mt-2" disabled="true" value="{{album.fecha|date:"Y-m-d"}}">
+                                <!-- <span>•</span> -->
+                                <!-- <span class="bg-secondary">{{album.genero}}</span> -->
+                                <input type="text" id="generoAlbum" class="form-control form-control-sm mt-2" disabled="true" value="{{album.genero}}">
+                                <!-- <span>•</span> -->
+                                <span >{{album.list|length}} canciones</span>
+                                <span>•</span>
+                                <span>Duracion</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENEDOR DE LA TABLA DE CANCIONES -->
+            <div class="container-fluid">
+                <div class="container mt-2 mb-5">
+                    <button data-toggle="modal" data-target="#modal" 
+                    class="btn btn-secondary btn-block">Agregar otra cancion</button>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-row justify-content-between">
+                <button id="btn-principal" class="btn btn-primary w-50 m-2" onclick="editarAlbum()">
+                    Editar album
+                </button>
+                
+                <button class="btn btn-danger w-50 m-2" onclick="eliminarAlbum()">
+                    Eliminar album
+                </button>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

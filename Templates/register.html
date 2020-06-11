@@ -1,0 +1,72 @@
+{% extends 'header.html' %}
+{% load static %}
+
+
+{% block contenido %}
+<div class="container-login">
+    <div class="container-login-form mt-4">
+
+        <div class="container d-flex justify-content-center align-items-center">
+            <button id="btn-registro-facebook">
+                REGÍSTRATE CON  <br>    
+                FACEBOOK
+            </button>
+        </div>
+
+        <div class="dropdown-divider mt-3 mb-3"></div>
+
+        <div class="container">
+            <h6 class="text-center font-weight-bold">Regístrate con tu dirección de email</h6>
+        </div>
+        <div class="container">
+            {{form.non_field_errors}}
+            
+            <form action="{% url 'register' %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}    
+                {% for field in form %}
+                    <div class="form-group">
+
+                        {% if field.field.widget.input_type == 'checkbox' %}
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" aria-label="Checkbox for following text input">
+                            </div>
+                        </div>
+                        <input disabled="true" type="text" class="form-control" value="¿Eres artista?">
+                        </div>
+                        {% else %}
+                        {{field.errors}}
+                        {{field}}
+
+                        {% endif %}
+
+                        
+                        <small class="form-text text-muted">{{field.help_text}}</small>
+                    </div>
+                {% endfor %}
+
+                <div class="container-fluid help-info">
+                    <p class="text-center">
+                        <small>Al hacer clic en Registrarse, acepta los <span class="info">Términos y Condiciones</span> de Uso de Spotify. </small>
+                    </p>
+                    <p class="text-center">
+                        <small>Para obtener más información sobre cómo Spotify recopila, utiliza, comparte y protege sus datos personales, lea la <span class="info">Política de Privacidad</span> de Spotify.</small>
+                    </p>
+                </div>
+
+                <div class="container-fluid text-center">
+                    <input type="submit" value="REGÍSTRATE" class="btn-register">
+                </div>
+            </form>
+            <br>
+
+            <div class="container-fluid text-center lin">
+                <p class="link-login">¿Ya tienes una cuenta? <a href="{% url 'login' %}"><span>Iniciar sesión</span></a></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

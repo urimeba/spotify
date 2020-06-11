@@ -1,0 +1,133 @@
+{% extends 'navbar_artista.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid bg-dark text-white" style="height: 90vh;">
+    <div class="container">
+        <p class="display-4 text-center">Vista general de la cuenta</p>
+
+        <div class="container-fluid d-flex flex-row">
+
+            <div class="container w-50">
+                <div class="container-fluid d-flex flex-column no-wrap justify-content-start align-items-start">
+                    <h4>Información personal</h5>
+        
+                    <div class="column w-100 d-flex flex-row justify-content-around align-items-center">
+                        <div class="row w-50">
+                            <p>Nombre de usuario</p>
+                        </div>
+                        <div class="row w-50">
+                            <p>{{request.user.username}}</p>
+                        </div>
+                    </div>
+        
+                    <div class="column w-100 d-flex flex-row justify-content-around align-items-center">
+                        <div class="row w-50">
+                            <p>Nombre(s)</p>
+                        </div>
+                        <div class="row w-50">
+                            <p>{{request.user.first_name}}</p>
+                        </div>
+                    </div>
+        
+                    <div class="column w-100 d-flex flex-row justify-content-around align-items-center">
+                        <div class="row w-50">
+                            <p>Apellido(s)</p>
+                        </div>
+                        <div class="row w-50">
+                            <p>{{request.user.last_name}}</p>
+                        </div>
+                    </div>
+        
+        
+                    <div class="column w-100 d-flex flex-row justify-content-around align-items-center">
+                        <div class="row w-50">
+                            <p>Correo</p>
+                        </div>
+                        <div class="row w-50">
+                            <p>{{request.user.email}}</p>
+                        </div>
+                    </div>
+                </div>
+        
+        
+                <div class="container-fluid d-flex flex-column no-wrap justify-content-start align-items-start">
+                    <h4>Fechas importantes</h5>
+        
+                    <div class="column w-100 d-flex flex-row justify-content-around align-items-center">
+                        <div class="row w-50">
+                            <p>Fecha de nacimiento</p>
+                        </div>
+                        <div class="row w-50">
+                            <p>{{request.user.fechaNacimiento}}</p>
+                        </div>
+                    </div>
+        
+                    <div class="column w-100 d-flex flex-row justify-content-around align-items-center">
+                        <div class="row w-50">
+                            <p>Activo desde</p>
+                        </div>
+                        <div class="row w-50">
+                            <p>{{request.user.date_joined}}</p>
+                        </div>
+                    </div>
+                </div>
+        
+        
+                <div class="container-fluid d-flex flex-column no-wrap justify-content-start align-items-start">
+                    <h4>Informacion adicional</h5>
+        
+                    <div class="column w-100 d-flex flex-row justify-content-around align-items-center">
+                        <div class="row w-50">
+                            <p>Pais</p>
+                        </div>
+                        <div class="row w-50">
+                            <p>{{request.user.pais}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container w-50">
+
+                <div class="container w-75">
+                    <img class="w-100" src="{% static 'img/vinil2.png' %}" alt="">
+                </div>
+
+                <div class="container d-flex flex-row">
+                    <div class="container p-2">
+                        <a href="{% url 'changePassword' %}">
+                            <button class="btn btn-outline-light btn-lg">Cambiar contraseña</button>
+                        </a>
+                        
+                    </div>
+                    <div class="container p-2">
+                        <label class="btn btn-outline-light btn-lg" for="foto">Cambiar foto</label>
+                        <input style="display: none;" type="file" class="form-control-file" id="foto">
+                    </div>
+                    <div class="container p-2 d-flex flex-column justify-content-center align-items-center">
+                        <a href="{% url 'cerrarSesion' %}">
+                            <button class="btn btn-outline-danger btn-sm">Cerrar sesion</button> 
+                        </a>
+                        
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        
+
+        
+    </div>
+
+</div>
+
+
+{% endblock %}

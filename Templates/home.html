@@ -1,0 +1,103 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <title>Música para todos - Spotify</title>
+</head>
+<body>
+
+    <div class="container-fluid d-flex align-items-center justify-content-center" id="head-container">
+
+        <div class="container w-50 h-100">
+            <img src="{% static 'img/logo.png' %}" id="logo">
+        </div>
+
+
+        <div class="container w-50 h-100 d-flex flex-row justify-content-center align-items-center">
+            <div class="links container h-100 d-flex flex-row justify-content-center align-items-center text-center"><a href="">Premium</a></div>
+            <div class="links container h-100 d-flex flex-row justify-content-center align-items-center text-center"><a href="">Ayuda</a></div>
+            <div class="links container h-100 d-flex flex-row justify-content-center align-items-center text-center"><a href="">Descargar</a></div>
+            <div class="links classfix">|</div>
+            <div class="links container h-100 d-flex flex-row justify-content-center align-items-center text-center"><a href="{% url 'register' %}">Registrate</a></div>
+            <div class="links container h-100 d-flex flex-row justify-content-center align-items-center text-center"><a href="{% url 'login' %}">Inicio de sesión</a></div>
+        </div>
+    </div>
+
+
+    <div class="container-image d-flex flex-column justify-content-center align-items-center "> 
+
+        <div class="container">
+            <div class="container text-center">
+                <h1 class="display-3">Música para todos.</h1>
+            </div>
+            <div class="container text-center">
+                <h5>Millones de canciones. No necesitas tarjeta de crédito.</h1>
+                </div>
+            <div class="container text-center">
+                <button id="btn-get">OBTÉN SPOTIFY GRATIS</button>
+            </div>
+        </div>
+
+
+        
+
+
+        
+        
+    </div>
+
+    <div class="container-fluid bg-black h-100">
+        <div class="container pt-5 w-75 d-flex flex-row justify-content-center align-items-start bg-black">
+            <div class="container h-50">
+                <img src="{% static 'img/logo.png' %}" id="logo">
+            </div>
+
+            <div class="container bg-black h-50">
+                <div class="container d-flex flex-column justify-content-start align-items-start">
+                    <h6 class="subtitle">COMPAÑIA</h6>
+                    <p><a href="">Acerca de</a></p>
+                    <p><a href="">Empleos</a></p>
+                    <p><a href="">For the record</a></p>
+
+                </div>
+
+            </div>
+            <div class="container h-50">
+                <h6 class="subtitle">COMUNIDADES</h6>
+                <p><a href="">Servicios para artistas</a></p>
+                <p><a href="">Desarrolladores</a></p>
+                <p><a href="">Marcas</a></p>
+                <p><a href="">Inversionistas</a></p>
+                <p><a href="">Proveedores</a></p>
+            </div>
+            <div class="container h-50">
+                <h6 class="subtitle">ENLACES ÚTILES</h6>
+                <p><a href="">Ayuda</a></p>
+                <p><a href="">Reproductor web</a></p>
+                <p><a href="">App móvil gratis</a></p>
+            </div>
+            <div class="container h-50"></div>
+            <div class="container h-50 d-flex flex-row ">
+                <div class="container p-0 d-flex flex-column justify-content-center align-items-center img-round">
+                    <img class="img-logos" src="{% static 'img/instagram.png' %}" alt="">
+                </div>
+
+                <div class="container p-0 d-flex flex-column justify-content-center align-items-center img-round">
+                    <img class="img-logos" src="{% static 'img/twitter.png' %}" alt="">
+                </div>
+
+                <div class="container p-0 d-flex flex-column justify-content-center align-items-center img-round">
+                    <img class="img-logos" src="{% static 'img/facebook.png' %}" alt="">
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

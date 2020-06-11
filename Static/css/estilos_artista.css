@@ -1,0 +1,89 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+body, html{
+    height: 100%;
+    width: 100%;
+}
+
+.header{
+    height: 10%;
+    background-color: red;
+}
+
+.header-titles{
+    width: 100px !important;
+}
+
+.btn-none{
+    border: none;
+    background-color: none;
+    cursor: pointer;
+}
+
+.img-perfil-header{
+    height: 100%;
+    border: 1px solid white;
+    border-radius: 30px;
+}
+
+.img-logo-header{
+    height: 35px;
+}
+
+.cards{
+    height: 200px;
+    /* border: 1px solid black; */
+}
+
+.container a, .container a:link, .container a:active, .container a:visited{
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.container a:hover{
+    font-weight: bold !important;
+    background-color: grey;
+}
+
+.img-card{
+    width: 100%;
+    object-fit: cover;
+}
+
+.icon-edit{
+    height: 15px;
+}
+
+.time-img{
+    width: 20px;
+}
+
+.navbar-artist{
+    color: white;
+    background-color:#000000; 
+}
+
+.navbar-artist a:link, .navbar-artist a:active, .navbar-artist a:visited{
+    color: white;
+    background-color:#000000; 
+    font-weight: bold;
+}
+
+.navbar-artist a:hover{
+    color: #00BF2E;
+    text-decoration: none   ;
+}
+
+.disabledInput{
+    background-color: #E9EBEF;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    color: #495057;
+}
+
+.bigFont{
+    font-size: 3.5rem;
+}

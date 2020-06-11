@@ -1,0 +1,138 @@
+{% extends 'navbar_artista.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid bg-dark text-white d-flex flex-column">
+
+    <!-- BOTON PARA CREAR UN NUEVO ALBUM -->
+    <div class="container mt-3">
+        <a href="{% url 'newAlbum' %}">
+            <button class="btn btn-lg btn-block btn-outline-light">
+                Crear álbum nuevo
+            </button>
+        </a>
+        
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="container mt-5">
+        <!-- TITULO UNICAMENTE -->
+        <h1 class="display-4">Tus álbums</h1>
+
+
+        {% regroup canciones by album as lista_albums %}
+        {% for album in lista_albums %}
+        
+        
+        <!-- CONTENDOR DEL ALBUM COMPLETO -->
+        <div class="container w-75 mt-3 ">
+            <div class="container-fluid d-flex flex-row justify-content-between align-items-start">
+                <!-- CONTENEDOR DE LAS DOS COLUMNAS -->
+                <div class="row">
+                    <!-- CONTENEDOR DE LA IMAGEN -->
+                    <div class="col-4">
+                        <img class="w-100" src="{{MEDIA_URL}}{{album.grouper.foto}}" alt="">
+                    </div>
+                    <!-- CONTENEDOR DE LA INFORMACION -->
+                    <div class="col-8  w-75 d-flex flex-column justify-content-center align-items-center">
+                        <div class="row ">
+                            <div class="col-11  d-flex flex-column justify-content-center align-items-center">
+                                <p class="display-4 font-weight-bold ">{{album.grouper.nombre}}</p>
+                            </div>
+                            <div class="col-1 mt-3 d-flex flex-row justify-content-start align-items-start">
+                                <a href="{% url 'editAlbum' idAlbum=album.grouper.id  %}">
+                                    <button class="btn m-0 p-0 btn-large d-flex flex-row justify-content-center align-items-center">
+                                        <img class="icon-edit" src="{% static 'img/edit.png' %}" alt="" style="filter: brightness(0) invert(1);">
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- CONTENEDOR DE LA INFORMACION ESPECIFICA -->
+                        <div class="container-fluid" style="height: 10%;">
+                            <p>
+                                <span>{{album.grouper.fecha}}</span>
+                                <span>•</span>
+                                <span>{{album.grouper.genero}}</span>
+                                <span>•</span>
+                                <span>{{album.list|length}} canciones</span>
+                                <span>•</span>
+                                <span>Duracion</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENEDOR DE LA TABLA DE CANCIONES -->
+            <div class="container-fluid">
+                <table class="table table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col-1">#</th>
+                        <th scope="col-5">Nombre</th>
+                        <th scope="col-4">Autor(es)</th>
+                        <th scope="col-2">
+                            <img class="time-img" src="{% static 'img/time.png' %}" alt="" style="filter: brightness(0) invert(1);">
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for cancion in album.list %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{cancion.nombre}}</td>
+                                <td>{{cancion.autor}}</td>
+                                <td>{{cancion.duracion}}</td>
+                              </tr>
+                        {% endfor %}
+                      
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% for album in albums %}
+        <!-- CONTENDOR DEL ALBUM COMPLETO -->
+        <div class="container w-75 mt-3 ">
+            <div class="container-fluid d-flex flex-row justify-content-between align-items-start">
+                <!-- CONTENEDOR DE LAS DOS COLUMNAS -->
+                <div class="row">
+                    <!-- CONTENEDOR DE LA IMAGEN -->
+                    <div class="col-4">
+                        <img class="w-100" src="{{MEDIA_URL}}{{album.foto}}" alt="">
+                    </div>
+                    <!-- CONTENEDOR DE LA INFORMACION -->
+                    <div class="col-8  w-75 d-flex flex-column justify-content-center align-items-center">
+                        <div class="row ">
+                            <div class="col-11  d-flex flex-column justify-content-center align-items-center">
+                                <p class="display-4 font-weight-bold ">{{album.nombre}}</p>
+                            </div>
+                            <div class="col-1 mt-3 d-flex flex-row justify-content-start align-items-start">
+                                <a href="{% url 'editAlbum' idAlbum=album.id  %}">
+                                    <button class="btn m-0 p-0 btn-large d-flex flex-row justify-content-center align-items-center">
+                                        <img class="icon-edit" src="{% static 'img/edit.png' %}" alt="" style="filter: brightness(0) invert(1);">
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- CONTENEDOR DE LA INFORMACION ESPECIFICA -->
+                        <div class="container-fluid" style="height: 10%;">
+                            <p>
+                                <span>{{album.fecha}}</span>
+                                <span>•</span>
+                                <span>{{album.genero}}</span>
+                                <span>•</span>
+                                <span>{{album.list|length}} canciones</span>
+                                <span>•</span>
+                                <span>Duracion</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

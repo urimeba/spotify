@@ -1,0 +1,73 @@
+{% extends 'navbar_artista.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid bg-dark text-white d-flex">
+    <div class="container d-flex flex-column col-9 ">
+
+        <!-- TARJETA 4*8 -->
+        <a href="{% url 'newAlbum' %}">
+            <div class="container-fluid d-flex mt-1 flex-row cards">
+                <div class="container-fluid h-100 w-100 p-0 m-0 col-4 d-flex flex-row 
+                justify-content-center align items-center">
+                    <img class="img-card" src="{% static 'img/vinil2.png' %}" alt="">
+                </div>
+                <div class="continer col-8 d-flex flex-row justify-content-center align-items-center">
+                    <h1 class="display-4">Subir albúm</h1>
+                </div>
+            </div>
+        </a>
+        
+
+        <!-- TARJETA 8*4 -->
+        <a href="{% url 'albums' %}">
+            <div class="container-fluid d-flex mt-1 flex-row cards">
+                <div class="continer col-8 d-flex flex-row justify-content-center align-items-center">
+                    <h1 class="display-4">Modificar albúm</h1>
+                </div>
+                <div class="container-fluid h-100 w-100 p-0 m-0 col-4 d-flex flex-row 
+                justify-content-center align items-center">
+                    <img class="img-card" src="{% static 'img/config.png' %}" alt="">
+                </div>
+            </div>
+        </a>
+        
+
+        <!-- TARJETA 4*8 -->
+        <a href="{% url 'perfil' %}">
+            <div class="container-fluid d-flex mt-1 flex-row cards">
+                <div class="container-fluid h-100 w-100 p-0 m-0 col-4 d-flex flex-row 
+                justify-content-center align items-center">
+                    <img class="img-card" src="{% static 'img/vinil2.png' %}" alt="">
+                </div>
+                <div class="continer col-8 d-flex flex-row justify-content-center align-items-center">
+                    <h1 class="display-4">Modificar perfil</h1>
+                </div>
+            </div>
+        </a>
+        
+
+
+    </div>
+
+    <div class="container d-flex flex-row col-3  text-center pt-5">
+
+        <div class="container w-100">
+            <p class="lead">
+                Estadisticas semanales
+            </p>
+
+            <small>Listeners</small>
+            <p>1,000,000</p>
+
+            <small># Reproducciones</small>
+            <p>1,000,000</p>
+
+            <small>Ganancias</small>
+            <p>1,000,000</p>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

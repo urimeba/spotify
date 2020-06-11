@@ -1,0 +1,80 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block contenido %}
+<div class="container-login">
+
+<div class="container-login-form mt-4">
+
+    <div class="container-fluid text-center ">
+        <p class="font-weight-bold">Para continuar, logueate en Spotify</p>
+    </div>
+
+    <div class="container-fluid text-center">
+        
+        <button  class="boton-redes" id="boton-facebook">
+            <img class="icon-btn" src="{% static 'img/facebook2.png' %}" alt="">
+            CONTINUAR CON FACEBOOK
+        </button>
+    </div>
+
+    <div class="container-fluid text-center">
+        <button class="boton-redes bg-black">
+            <img class="icon-btn" src="{% static 'img/apple.png' %}" alt="">
+            CONTINUAR CON APPLE
+        </button>
+    </div>
+
+    <div class="container-fluid text-center ">
+        <p><small>OR</small></p>
+    </div>
+
+    
+
+    <div class="container">
+        {{form.non_field_errors}}
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}    
+            {% for field in form %}
+                <div class="form-group">
+                    <!-- {{field.label_tag}} -->
+                    {{field}}
+                </div>
+            {% endfor %}
+            <br>
+            <input type="submit" value="LOG IN" class="btn-iniciar">
+        </form>
+        <br>
+        <br>
+        <br>    
+        
+        <div class="container text-center link-login">
+            <a href="" >¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <div class="mt-3 mb-3 dropdown-divider"></div>
+
+        <div class="container text-center">
+            <p class="font-weight-bold" id="container-btn-go-register">¿No tienes cuenta?</p>
+        </div>
+
+        <div class="container-fluid p-0 m-0">
+            <a href="{% url 'register' %}">
+                <button id="btn-go-register">REGISTRATE EN SPOTIFY</button>
+            </a>
+            
+        </div>
+
+        
+    </div>
+
+</div>
+
+
+
+
+
+
+</div>
+
+{% endblock %}

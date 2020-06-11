@@ -2,3 +2,45 @@
 Pipfile
 
 Pipfile.lock
+
+Apps/__pycache__/
+
+Apps/Reproduccion/__pycache__/
+
+Apps/Reproduccion/migrations/
+
+Apps/User/__pycache__/
+
+Apps/User/migrations/__pycache__/
+
+spotify/__pycache__/
+
+Apps/Artista/__pycache__/
+
+Apps/User/migrations/
+
+*.mp3
+
+media/fotos_perfil/
+
+media/albums/urimeba/Slash & Friends/
+
+media/albums/urimeba/aaaa/
+
+media/albums/urimeba/aasdasd/
+
+media/albums/urimeba/Apocalyptic Love/
+
+media/albums/urimeba/asdasd/
+
+media/albums/urimeba/asdasda/
+
+media/albums/urimeba/asdasdada/
+
+media/albums/urimeba/dasdasdada/
+
+media/albums/urimeba/Otro album/
+
+media/albums/urimeba/Otro album2/
+
+media/albums/urimeba/otro album3/
